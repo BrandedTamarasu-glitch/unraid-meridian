@@ -37,7 +37,7 @@
 
 ## Install
 
-> **Requires** the [Simple Custom WebUI CSS](https://forums.unraid.net/topic/108883-plugin-simple-custom-webui-css/) plugin by WuSiYu. Install it from Community Applications before proceeding.
+> **Requires** the [Simple Custom WebUI CSS](https://github.com/WuSiYu/unraid-custom-css) plugin by WuSiYu ([forum thread](https://forums.unraid.net/topic/195276-plugin-simple-custom-webui-css-plugin-for-unraid-72/)). Install it from Community Applications before proceeding.
 
 1. Install **Simple Custom WebUI CSS** from Community Applications
 2. Download [`meridian.css`](meridian.css)
@@ -89,5 +89,5 @@ To change the accent color across the entire theme, update `--az-accent` in Laye
 |---|---|
 | Unraid version | 7.2.4 |
 | Base theme | Black |
-| Required plugin | [Simple Custom WebUI CSS](https://forums.unraid.net/topic/108883-plugin-simple-custom-webui-css/) by WuSiYu |
+| Required plugin | [Simple Custom WebUI CSS](https://github.com/WuSiYu/unraid-custom-css) by WuSiYu |
 | S/4HANA | N/A — Unraid only |
