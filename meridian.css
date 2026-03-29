@@ -1,0 +1,488 @@
+/*
+ * =============================================================================
+ * MERIDIAN — Unraid Theme
+ * =============================================================================
+ * Theme name  : Meridian
+ * Version     : 1.0.0
+ * Tested with : Unraid 7.2.4
+ * Base theme  : Black (dynamix/themes/black.css)
+ * Date        : 2026-03-29
+ *
+ * -----------------------------------------------------------------------------
+ * HOW TO APPLY
+ * -----------------------------------------------------------------------------
+ * 1. Copy this file to your Unraid flash drive:
+ *      /boot/config/plugins/dynamix/themes/azure-dark.css
+ * 2. In the Unraid web UI navigate to:
+ *      Settings > Display Settings > Theme
+ * 3. Select "Custom CSS" and reference the file path above, OR paste the
+ *    contents into the Custom CSS field directly.
+ * 4. Save — the UI reloads with the Azure Dark palette applied.
+ *
+ * -----------------------------------------------------------------------------
+ * HOW TO ROLLBACK
+ * -----------------------------------------------------------------------------
+ * 1. Navigate to: Settings > Display Settings > Theme
+ * 2. Set Theme back to "Black" (or your previous theme).
+ * 3. Clear the Custom CSS field if you pasted content there.
+ * 4. Save — the default Black theme is restored immediately.
+ * 5. Delete azure-dark.css from the flash drive if no longer needed.
+ *
+ * -----------------------------------------------------------------------------
+ * ARCHITECTURE — 3-LAYER SYSTEM
+ * -----------------------------------------------------------------------------
+ * Layer 1  (--az-* palette)
+ *   Defines the canonical colour palette as named semantic tokens.
+ *   ALL hex values live here and ONLY here.
+ *   Other layers reference these tokens via var() — never raw hex.
+ *   Exception: two rgba() values in Layer 2 that cannot traverse a
+ *   var() chain reliably inside Dynamix (documented inline).
+ *
+ * Layer 2  (Dynamix semantic overrides)
+ *   Maps every Dynamix CSS custom property to an --az-* token.
+ *   This is the bridge between the Azure Dark palette and Unraid's
+ *   own design system. Changing a token in Layer 1 automatically
+ *   propagates here. No raw hex in this layer (except documented exceptions).
+ *
+ * Layer 3  (Selector-level polish)  ← added in Wave 2
+ *   Targeted selector overrides for elements Dynamix's variable system
+ *   cannot reach — e.g. hardcoded inline colours, third-party widget
+ *   defaults, pseudo-element styling. Each rule includes a comment
+ *   explaining why the variable system was insufficient.
+ *
+ * -----------------------------------------------------------------------------
+ * KNOWN LIMITATIONS
+ * -----------------------------------------------------------------------------
+ * 1. Button selector breadth: button:not([class*="ui-"]) catches all non-jQuery-UI
+ *    buttons including destructive actions (Stop Array, Format Disk). Dynamix does
+ *    not expose a distinguishing class for destructive vs safe buttons, so these
+ *    render with the same blue gradient as primary CTAs. Semantic color for
+ *    destructive actions is not achievable without DOM inspection per Unraid version.
+ *
+ * 2. Checkbox/radio :checked state: depends on whether Dynamix uses native browser
+ *    controls or custom rendering. Not overridden here — if custom, may need
+ *    targeted selector additions after live inspection.
+ *
+ * -----------------------------------------------------------------------------
+ * SECURITY NOTE
+ * -----------------------------------------------------------------------------
+ * This stylesheet contains NO external url() references. All values are
+ * self-contained CSS custom properties or literal colour values. No fonts,
+ * images, or resources are fetched from any remote origin.
+ * =============================================================================
+ */
+
+
+/* =============================================================================
+   LAYER 1: PALETTE — canonical --az-* tokens (hex defined here only)
+   ============================================================================= */
+
+:root {
+  --az-bg:             #0D1117; /* Page canvas — deepest background level         */
+  --az-surface:        #131B2A; /* Primary surface — cards, panels, headers       */
+  --az-surface-2:      #1C2333; /* Elevated surface — modals, focused inputs      */
+  --az-border:         #30363D; /* Standard border — separators, input outlines   */
+  --az-border-subtle:  #21262D; /* Subtle border — hr, low-contrast dividers      */
+
+  --az-text-primary:   #E6EDF3; /* Primary readable text                          */
+  --az-text-muted:     #8B949E; /* Secondary/helper text, labels, footers         */
+  --az-text-disabled:  #484F58; /* Disabled state text and border cues            */
+
+  --az-accent:         #1E6FE8; /* Interactive accent — links, icons, CTAs        */
+  --az-accent-hover:   #4D8EF5; /* Accent on hover — lighter for elevation feel   */
+  --az-accent-active:  #1558CC; /* Accent on press/active — darker for feedback   */
+
+  --az-warning:        #D97706; /* Operational warning — disk temp, low space     */
+  --az-error:          #EF4444; /* Critical error — disk fault, parity failure    */
+}
+
+
+/* =============================================================================
+   LAYER 2: DYNAMIX SEMANTIC OVERRIDES — maps Dynamix vars to --az-* tokens
+   ============================================================================= */
+
+:root {
+
+  /* --- Backgrounds --------------------------------------------------------- */
+  --background-color:                var(--az-bg);       /* Page body background          */
+  --mild-background-color:           var(--az-surface);  /* Slightly raised surfaces      */
+  --header-background-color:         var(--az-surface);  /* Top navigation bar            */
+  --footer-background-color:         var(--az-surface);  /* Bottom footer bar             */
+  --dashboard-background-color:      var(--az-surface);  /* Dashboard tile backgrounds    */
+  --table-background-color:          var(--az-bg);       /* Table body rows               */
+  --table-header-background-color:   var(--az-surface);  /* Table column header row       */
+  --shade-bg-color:                  var(--az-surface);  /* Shaded/alternate UI surfaces  */
+  --input-bg-color:                  var(--az-surface);  /* Default input background      */
+  --focus-input-bg-color:            var(--az-surface-2);/* Input background when focused */
+  --inverse-background-color:        var(--az-surface-2);/* Inverted panel surfaces       */
+  --title-header-background-color:   var(--az-surface);  /* Section title header bg       */
+  --usage-disk-background-color:     var(--az-surface);  /* Disk usage bar track          */
+  --radio-background-color:          var(--az-surface);  /* Radio button background       */
+  --disabled-input-background-color: var(--az-surface);  /* Disabled input background     */
+  --opac-background-color:           rgba(13, 17, 23, 0.95); /* Translucent overlay bg   */
+
+  /* --- Text --------------------------------------------------------------- */
+  --text-color:           var(--az-text-primary);  /* Default body text              */
+  --alt-text-color:       var(--az-text-muted);    /* Secondary/helper text          */
+  --disabled-text-color:  var(--az-text-disabled); /* Disabled control text          */
+  --inverse-text-color:   var(--az-bg);            /* Text on accent/inverted surface*/
+  --header-text-color:    var(--az-text-primary);  /* Header nav text                */
+  --footer-text:          var(--az-text-muted);    /* Footer text                    */
+  --link-text-color:      var(--az-accent);        /* Hyperlink text                 */
+
+  /* --- Borders ------------------------------------------------------------ */
+  --border-color:              var(--az-border);         /* General purpose border       */
+  --input-border-color:        var(--az-border);         /* Input field outline          */
+  --table-border-color:        var(--az-border);         /* Table grid lines             */
+  --hr-color:                  var(--az-border-subtle);  /* <hr> divider line            */
+  --alt-border-color:          var(--az-border);         /* Alternate/secondary borders  */
+  --disabled-border-color:     var(--az-text-disabled);  /* Disabled control borders     */
+  --inverse-border-color:      var(--az-border);         /* Inverted surface borders     */
+  --textarea-border-color:     var(--az-border);         /* Textarea outline             */
+  --disabled-input-border-color: var(--az-text-disabled);/* Disabled input border        */
+
+  /* --- Buttons ------------------------------------------------------------ */
+  --button-text-color:       var(--az-accent);   /* Default button label colour    */
+  --button-border:           none;               /* Remove default button border   */
+  --button-background:       var(--az-surface);  /* Default button background      */
+  --hover-button-border:     var(--az-accent);   /* Button border on hover         */
+  --hover-button-text-color: #FFFFFF;            /* Button label on hover          */
+  --hover-button-background: var(--az-accent);   /* Button fill on hover           */
+
+  /* --- Scrollbar ---------------------------------------------------------- */
+  --scrollbar-color:       var(--az-border);       /* Scrollbar thumb               */
+  --scrollbar-hover-color: var(--az-text-muted);   /* Scrollbar thumb on hover      */
+
+  /* --- Tables ------------------------------------------------------------- */
+  --hover-table-row-background-color: rgba(30, 111, 232, 0.08); /* EXCEPTION: literal rgba — var() chain unreliable in Dynamix */
+
+  /* --- Usage / Progress bars ---------------------------------------------- */
+  --usage-bar-background-color:      var(--az-border);  /* Bar track (unfilled)         */
+  --usage-bar-used-background-color: var(--az-accent);  /* Bar fill (used amount)       */
+
+  /* --- Checkboxes & Radios ------------------------------------------------ */
+  --checkbox-color:       var(--az-text-muted); /* Unchecked checkbox colour      */
+  --checkbox-hover-color: var(--az-accent);     /* Checkbox colour on hover       */
+
+  /* --- Dashboard ---------------------------------------------------------- */
+  --dashboard-border-color:       rgba(30, 111, 232, 0.12); /* EXCEPTION: literal rgba */
+  --dashboard-icon-color:         var(--az-accent);         /* Dashboard widget icons    */
+  --dashboard-title-action-color: var(--az-accent-hover);   /* Dashboard action links    */
+
+  /* --- Shadows ------------------------------------------------------------ */
+  --small-shadow: 0 0 3px rgba(13, 17, 23, 0.8); /* Subtle drop shadow (bg-tinted) */
+
+  /* --- Brand token remapping -------------------------------------------- */
+  /* Map to semantic warning/error tokens — NOT accent blue.
+     Unraid uses brand-orange for disk warnings, brand-red for critical errors.
+     Collapsing these into accent blue destroys operational signal distinction. */
+  --brand-orange: var(--az-warning); /* Disk warnings, temperature alerts     */
+  --brand-red:    var(--az-error);   /* Critical errors, parity failures       */
+
+  /* --- Dynamix widgets: active state -------------------------------------- */
+  --dynamix-ui-state-active-border-color: var(--az-accent); /* Active/selected border  */
+
+  /* --- Dynamix widgets: SweetAlert dialogs -------------------------------- */
+  --dynamix-sweet-alert-text-color:    var(--az-text-primary); /* Alert body text       */
+  --dynamix-sweet-alert-icon-bg-color: var(--az-surface);      /* Alert icon background */
+
+  /* --- Dynamix widgets: tablesorter --------------------------------------- */
+  --dynamix-tablesorter-thead-th-text-color:    var(--az-text-primary); /* TH label text       */
+  --dynamix-tablesorter-thead-th-bg-color:      var(--az-surface);      /* TH cell background  */
+  --dynamix-tablesorter-tbody-row-bg-color:     var(--az-bg);           /* Default row bg      */
+  --dynamix-tablesorter-tbody-row-alt-bg-color: var(--az-surface);      /* Zebra stripe row bg */
+  --dynamix-tablesorter-thead-row-border-color: var(--az-border);       /* Header row border   */
+  --dynamix-tablesorter-tbody-row-border-color: var(--az-border-subtle);/* Body row border     */
+
+  /* --- Dynamix widgets: select ------------------------------------------- */
+  --dynamix-select-bg-color:       var(--az-bg);      /* Select dropdown background    */
+  --dynamix-select-box-shadow:     0 2px 0 rgba(13,17,23,0.8), inset 0 -1px var(--az-bg); /* Select shadow */
+  --dynamix-select-disabled-bg-color: var(--az-surface); /* Disabled select background */
+
+  /* --- Dynamix widgets: box text ----------------------------------------- */
+  --dynamix-box-text-color: var(--az-text-primary); /* Generic box/widget text       */
+
+  /* --- Dynamix widgets: file tree ---------------------------------------- */
+  --dynamix-filetree-bg-color: var(--az-bg); /* File tree panel background        */
+
+  /* --- Dynamix widgets: dropdown checklist -------------------------------- */
+  --dynamix-ui-dropdownchecklist-color:                   var(--az-text-primary); /* Primary text           */
+  --dynamix-ui-dropdownchecklist-color-alt1:              var(--az-bg);           /* Alternate bg-level 1   */
+  --dynamix-ui-dropdownchecklist-color-alt2:              var(--az-text-muted);   /* Alternate text/muted   */
+  --dynamix-ui-dropdownchecklist-dropcontainer-border-color: var(--az-accent);   /* Open dropdown border   */
+
+}
+
+
+/* === LAYER 3: SELECTOR-LEVEL POLISH (added in Wave 2) === */
+/* Targeted selector overrides for elements the Dynamix variable system cannot
+   reach: pseudo-elements, hardcoded widget defaults, and interaction states.   */
+
+
+/* --- 1. SCROLLBARS ------------------------------------------------------- */
+/* ::-webkit-scrollbar pseudo-elements are not reachable via Dynamix vars      */
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(30, 111, 232, 0.35);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(30, 111, 232, 0.65);
+}
+
+
+/* --- 2. TEXT SELECTION --------------------------------------------------- */
+/* ::selection is a pseudo-element; no Dynamix variable covers it              */
+
+::selection {
+  background: rgba(30, 111, 232, 0.3);
+  color: var(--az-text-primary);
+}
+
+::-moz-selection {
+  background: rgba(30, 111, 232, 0.3);
+  color: var(--az-text-primary);
+}
+
+
+/* --- 3. FOCUS RINGS ------------------------------------------------------ */
+/* Dynamix does not define a :focus-visible token; browser defaults bleed       */
+
+:focus-visible {
+  outline: 2px solid var(--az-accent);
+  outline-offset: 2px;
+}
+
+/* Suppress the default outline on non-keyboard focus paths (mouse clicks)     */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+
+/* --- 4. NAVIGATION — ACTIVE STATE --------------------------------------- */
+/* Active nav items get a left-border + fade-right glow — the Azure Dark signature.
+   Dynamix's --dynamix-ui-state-active-border-color token only covers borders;
+   it cannot produce a directional gradient background.                        */
+
+/* Active nav item: left-border accent + fade-right glow — the Azure Dark signature */
+.nav li.active > a,
+.nav li.active > a:hover,
+#navigation li.active > a,
+#navigation li.active > a:hover {
+  border-left: 2px solid var(--az-accent);
+  background: linear-gradient(90deg, rgba(30, 111, 232, 0.1) 0%, transparent 70%);
+  padding-left: 10px; /* matches base nav padding — border absorbed by layout */
+}
+
+/* Muted inactive nav items recede */
+.nav li > a,
+#navigation li > a {
+  transition: color 150ms ease, background 150ms ease;
+}
+
+/* Hover on non-active nav items */
+.nav li:not(.active) > a:hover,
+#navigation li:not(.active) > a:hover {
+  background: rgba(30, 111, 232, 0.05);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav li > a,
+  #navigation li > a {
+    transition: none;
+  }
+}
+
+
+/* --- 5. BUTTONS — 3-STATE GRADIENT -------------------------------------- */
+/* Dynamix button vars set flat bg/border tokens only; they cannot express
+   multi-stop gradients, box-shadow rings, or the pressed translateY micro-    */
+
+/* Resting state — blue gradient with subtle ring shadow */
+.ui-button,
+button:not([class*="ui-"]),
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
+  background: linear-gradient(180deg, #3B81F4 0%, #1E6FE8 60%, #1558CC 100%);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(30, 111, 232, 0.2);
+  border: none;
+  color: #FFFFFF;
+  border-radius: 4px;
+}
+
+/* Hover state — lighter gradient, glow expands */
+.ui-button:hover,
+button:not([class*="ui-"]):hover,
+input[type="button"]:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover {
+  background: linear-gradient(180deg, #4D8EF5 0%, #3B81F4 60%, #1E6FE8 100%);
+  box-shadow: 0 2px 8px rgba(30, 111, 232, 0.35), 0 0 0 1px rgba(30, 111, 232, 0.3);
+}
+
+/* Active/pressed state — flat dark, inset shadow */
+.ui-button:active,
+button:not([class*="ui-"]):active,
+input[type="button"]:active,
+input[type="submit"]:active,
+input[type="reset"]:active {
+  background: #1045B8;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4);
+  transform: translateY(1px);
+}
+
+/* Disabled state — flat, desaturated, no pointer */
+.ui-button:disabled,
+.ui-button[disabled],
+button:not([class*="ui-"]):disabled,
+input[type="button"]:disabled,
+input[type="submit"]:disabled,
+input[type="reset"]:disabled {
+  background: var(--az-surface);
+  box-shadow: none;
+  color: var(--az-text-disabled);
+  border: 1px solid var(--az-border);
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Button transitions (respects reduced motion) */
+.ui-button,
+button:not([class*="ui-"]),
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
+  transition: background 120ms ease, box-shadow 120ms ease, transform 80ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ui-button,
+  button:not([class*="ui-"]),
+  input[type="button"],
+  input[type="submit"],
+  input[type="reset"] {
+    transition: none;
+    transform: none;
+  }
+}
+
+
+/* --- 6. TYPOGRAPHY ------------------------------------------------------- */
+/* Adjusts weight, tracking, and line-height only — font-family and font-size
+   are left to Unraid defaults to avoid overriding user system preferences.    */
+
+/* Body — readable line-height, dot grid background texture */
+body {
+  line-height: 1.5;
+  background-color: var(--az-bg);
+  background-image: radial-gradient(circle, rgba(30, 111, 232, 0.10) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* Navigation items — slightly heavier, tracked */
+.nav a,
+.nav li > a,
+#navigation a,
+#navigation li > a {
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+/* Headings — tighter tracking, heavier */
+h1 { font-weight: 600; letter-spacing: -0.01em; line-height: 1.3;  }
+h2 { font-weight: 600; letter-spacing: 0;        line-height: 1.35; }
+h3 { font-weight: 600; letter-spacing: 0;        line-height: 1.4;  }
+
+/* Table headers — tracked for density */
+th,
+thead td {
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+
+/* --- 7. DASHBOARD WIDGETS ------------------------------------------------ */
+/* Dynamix dashboard vars set color tokens but not geometry (radius, spacing).
+   These rules handle visual containment the variable system cannot express.   */
+
+/* Dashboard widget cards — neutral containment border, consistent radius */
+.widget,
+.dashboard-widget,
+[class*="widget-"] {
+  border-radius: 6px;
+  border: 1px solid var(--az-border);
+}
+
+/* Dashboard section headers */
+.widget h2,
+.dashboard-widget h2,
+[class*="widget-"] h2 {
+  color: var(--az-text-primary);
+  border-bottom: 1px solid var(--az-border-subtle);
+  padding-bottom: 6px;
+  margin-bottom: 8px;
+}
+
+/* Usage/progress bar fill — accent blue */
+.usage-bar-used,
+[class*="usage"][class*="used"],
+.bar-fill {
+  background: var(--az-accent);
+}
+
+
+/* --- 8. FORM INPUTS — FOCUS STATE --------------------------------------- */
+/* The Dynamix --focus-input-bg-color token covers background only; it cannot
+   express a border-color change or the ambient glow box-shadow on focus.      */
+
+/* Input focus — blue border glow */
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="search"]:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--az-accent);
+  box-shadow: 0 0 0 2px rgba(30, 111, 232, 0.2);
+  outline: none; /* overridden by :focus-visible above for keyboard paths */
+}
+
+
+/* --- 9. LINKS — HOVER STATE --------------------------------------------- */
+/* Dynamix's --link-text-color covers the resting state. The hover transition
+   to --az-accent-hover is not reachable via a single static token.            */
+
+a {
+  color: var(--az-accent);
+}
+
+a:hover {
+  color: var(--az-accent-hover);
+}
+
+/* Suppress browser-default purple for visited links */
+a:visited {
+  color: var(--az-accent);
+}
+
+/* Dynamix hardcodes .blue-text to rgb(72,109,186) — override to palette accent */
+.blue-text {
+  color: var(--az-accent) !important;
+}
+
+
+/* === END MERIDIAN v1.0.0 === */

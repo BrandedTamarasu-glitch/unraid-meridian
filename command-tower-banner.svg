@@ -1,0 +1,263 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="90" viewBox="0 0 1920 90">
+  <defs>
+
+    <!-- Backgrounds -->
+    <linearGradient id="bgBase" x1="0" y1="0" x2="1" y2="0" gradientUnits="objectBoundingBox">
+      <stop offset="0%"   stop-color="#131B2A"/>
+      <stop offset="18%"  stop-color="#0F1520"/>
+      <stop offset="100%" stop-color="#0D1117"/>
+    </linearGradient>
+
+    <!-- Left blue ambient glow wash -->
+    <linearGradient id="leftGlow" x1="0" y1="0" x2="1" y2="0" gradientUnits="objectBoundingBox">
+      <stop offset="0%"   stop-color="#152D5A" stop-opacity="0.45"/>
+      <stop offset="20%"  stop-color="#1a3060" stop-opacity="0.15"/>
+      <stop offset="50%"  stop-color="#1E6FE8" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Bottom accent line — centered peak at x=960, fades to both edges -->
+    <linearGradient id="accentLine" x1="0" y1="0" x2="1" y2="0" gradientUnits="objectBoundingBox">
+      <stop offset="0%"   stop-color="#1E6FE8" stop-opacity="0"/>
+      <stop offset="35%"  stop-color="#1E6FE8" stop-opacity="0.55"/>
+      <stop offset="50%"  stop-color="#4D8EF5" stop-opacity="1"/>
+      <stop offset="65%"  stop-color="#1E6FE8" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#1E6FE8" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Bottom glow — centered -->
+    <linearGradient id="accentGlow" x1="0" y1="0" x2="1" y2="0" gradientUnits="objectBoundingBox">
+      <stop offset="0%"   stop-color="#1E6FE8" stop-opacity="0"/>
+      <stop offset="50%"  stop-color="#1E6FE8" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="#1E6FE8" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Text gradient fill — white top, cool blue bottom (increased contrast) -->
+    <linearGradient id="textGradient" x1="0" y1="18" x2="0" y2="57" gradientUnits="userSpaceOnUse">
+      <stop offset="0%"   stop-color="#FFFFFF"/>
+      <stop offset="55%"  stop-color="#E6EDF3"/>
+      <stop offset="100%" stop-color="#93C5FD"/>
+    </linearGradient>
+
+    <!-- Flanking rule gradients — bright near text, fade outward -->
+    <linearGradient id="ruleLeft" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#1E6FE8" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#4D8EF5" stop-opacity="0.55"/>
+    </linearGradient>
+    <linearGradient id="ruleRight" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#4D8EF5" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#1E6FE8" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Right fade mask for circuit traces -->
+    <linearGradient id="rightFadeMask" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="white" stop-opacity="0"/>
+      <stop offset="10%"  stop-color="white" stop-opacity="1"/>
+      <stop offset="80%"  stop-color="white" stop-opacity="1"/>
+      <stop offset="100%" stop-color="white" stop-opacity="0"/>
+    </linearGradient>
+    <mask id="rightFade">
+      <rect x="1420" y="0" width="500" height="90" fill="url(#rightFadeMask)"/>
+    </mask>
+
+    <!-- Left fade mask for left trace cluster -->
+    <linearGradient id="leftFadeMask" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="white" stop-opacity="0"/>
+      <stop offset="20%"  stop-color="white" stop-opacity="1"/>
+      <stop offset="80%"  stop-color="white" stop-opacity="1"/>
+      <stop offset="100%" stop-color="white" stop-opacity="0"/>
+    </linearGradient>
+    <mask id="leftFade">
+      <rect x="200" y="0" width="240" height="90" fill="url(#leftFadeMask)"/>
+    </mask>
+
+    <!-- Text glow filter -->
+    <filter id="textGlow" x="-10%" y="-30%" width="120%" height="160%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Bar halo filter — mid-range glow -->
+    <filter id="barHalo" x="-400%" y="-20%" width="900%" height="140%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="7" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Text outer bloom — heavy blur for atmosphere -->
+    <filter id="textBloom" x="-500%" y="-100%" width="1100%" height="300%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="16" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+      </feMerge>
+    </filter>
+
+    <!-- Signal arc mask — solid center, fades at edges -->
+    <radialGradient id="signalFade" cx="50%" cy="50%" r="50%">
+      <stop offset="40%"  stop-color="white" stop-opacity="1"/>
+      <stop offset="100%" stop-color="white" stop-opacity="0"/>
+    </radialGradient>
+    <mask id="signalMask">
+      <rect x="460" y="0" width="1000" height="90" fill="url(#signalFade)"/>
+    </mask>
+
+    <!-- Scanline pattern -->
+    <pattern id="scanlines" x="0" y="0" width="1920" height="3" patternUnits="userSpaceOnUse">
+      <rect y="0" width="1920" height="1" fill="black" fill-opacity="0.12"/>
+    </pattern>
+
+    <!-- Fine noise texture via turbulence -->
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="4" stitchTiles="stitch" result="noise"/>
+      <feColorMatrix type="saturate" values="0" in="noise" result="grey"/>
+      <feBlend in="SourceGraphic" in2="grey" mode="overlay" result="blended"/>
+      <feComposite in="blended" in2="SourceGraphic" operator="in"/>
+    </filter>
+
+  </defs>
+
+  <!-- ═══ LAYER 0: Base background ═══ -->
+  <rect width="1920" height="90" fill="url(#bgBase)"/>
+
+  <!-- ═══ LAYER 1: Left ambient glow ═══ -->
+  <rect width="960" height="90" fill="url(#leftGlow)"/>
+
+  <!-- ═══ LAYER 2: Scanlines overlay ═══ -->
+  <rect width="1920" height="90" fill="url(#scanlines)" opacity="1"/>
+
+  <!-- ═══ LAYER 3: Noise grain — bumped to 0.07 for material surface feel ═══ -->
+  <rect width="1920" height="90" fill="#1a2744" opacity="0.07" filter="url(#grain)"/>
+
+  <!-- ═══ LAYER 4: Signal arcs — committed at 0.30 (sonar ping) ═══ -->
+  <g stroke="#1E6FE8" stroke-width="0.75" fill="none" opacity="0.30" mask="url(#signalMask)">
+    <ellipse cx="960" cy="45" rx="60"  ry="28"/>
+    <ellipse cx="960" cy="45" rx="110" ry="44"/>
+    <ellipse cx="960" cy="45" rx="165" ry="60"/>
+    <ellipse cx="960" cy="45" rx="225" ry="72"/>
+    <ellipse cx="960" cy="45" rx="290" ry="82"/>
+    <ellipse cx="960" cy="45" rx="360" ry="88"/>
+  </g>
+
+  <!-- ═══ LAYER 5a: Left trace cluster — balances right PCB traces ═══ -->
+  <g stroke="#1E6FE8" stroke-width="0.8" fill="none" opacity="0.22" mask="url(#leftFade)">
+    <!-- Horizontal backbone -->
+    <line x1="200" y1="18" x2="440" y2="18"/>
+    <line x1="200" y1="72" x2="440" y2="72"/>
+    <!-- Vertical connectors -->
+    <line x1="240" y1="18" x2="240" y2="72"/>
+    <line x1="300" y1="18" x2="300" y2="72"/>
+    <line x1="360" y1="18" x2="360" y2="45"/>
+    <line x1="420" y1="45" x2="420" y2="72"/>
+    <!-- Short stubs -->
+    <line x1="270" y1="18" x2="270" y2="10"/>
+    <line x1="390" y1="72" x2="390" y2="82"/>
+  </g>
+  <g fill="#1E6FE8" opacity="0.35" mask="url(#leftFade)">
+    <circle cx="240" cy="18" r="2"/>
+    <circle cx="240" cy="72" r="2"/>
+    <circle cx="300" cy="18" r="2"/>
+    <circle cx="300" cy="72" r="2"/>
+    <circle cx="360" cy="18" r="2"/>
+    <circle cx="360" cy="45" r="2"/>
+    <circle cx="420" cy="45" r="2"/>
+    <circle cx="420" cy="72" r="2"/>
+    <!-- Active node -->
+    <circle cx="300" cy="18" r="4" fill="#4D8EF5" opacity="0.6"/>
+  </g>
+
+  <!-- ═══ LAYER 5b: Circuit traces (far right) ═══ -->
+  <g stroke="#1E6FE8" stroke-width="0.8" fill="none" opacity="0.22" mask="url(#rightFade)">
+    <!-- Horizontal backbone lines -->
+    <line x1="1420" y1="18" x2="1880" y2="18"/>
+    <line x1="1420" y1="45" x2="1880" y2="45"/>
+    <line x1="1420" y1="72" x2="1880" y2="72"/>
+    <!-- Vertical connectors -->
+    <line x1="1460" y1="18" x2="1460" y2="45"/>
+    <line x1="1520" y1="45" x2="1520" y2="72"/>
+    <line x1="1580" y1="18" x2="1580" y2="45"/>
+    <line x1="1580" y1="45" x2="1580" y2="72"/>
+    <line x1="1640" y1="18" x2="1640" y2="72"/>
+    <line x1="1700" y1="18" x2="1700" y2="45"/>
+    <line x1="1760" y1="45" x2="1760" y2="72"/>
+    <line x1="1820" y1="18" x2="1820" y2="45"/>
+    <line x1="1840" y1="45" x2="1840" y2="72"/>
+    <!-- Short branch stubs -->
+    <line x1="1500" y1="18" x2="1500" y2="10"/>
+    <line x1="1560" y1="72" x2="1560" y2="82"/>
+    <line x1="1680" y1="18" x2="1680" y2="10"/>
+    <line x1="1740" y1="72" x2="1740" y2="82"/>
+    <line x1="1800" y1="18" x2="1800" y2="10"/>
+    <line x1="1860" y1="45" x2="1860" y2="35"/>
+  </g>
+  <!-- Circuit nodes -->
+  <g fill="#1E6FE8" opacity="0.35" mask="url(#rightFade)">
+    <circle cx="1460" cy="18" r="2"/>
+    <circle cx="1460" cy="45" r="2"/>
+    <circle cx="1520" cy="45" r="2"/>
+    <circle cx="1520" cy="72" r="2"/>
+    <circle cx="1580" cy="18" r="2"/>
+    <circle cx="1580" cy="45" r="2"/>
+    <circle cx="1580" cy="72" r="2"/>
+    <circle cx="1640" cy="18" r="2.5"/>
+    <circle cx="1640" cy="45" r="2"/>
+    <circle cx="1640" cy="72" r="2"/>
+    <circle cx="1700" cy="18" r="2"/>
+    <circle cx="1700" cy="45" r="2"/>
+    <circle cx="1760" cy="45" r="2"/>
+    <circle cx="1760" cy="72" r="2"/>
+    <circle cx="1820" cy="18" r="2"/>
+    <circle cx="1820" cy="45" r="2"/>
+    <circle cx="1840" cy="45" r="2"/>
+    <circle cx="1840" cy="72" r="2"/>
+    <!-- Highlighted active nodes -->
+    <circle cx="1640" cy="18" r="4" fill="#4D8EF5" opacity="0.6"/>
+    <circle cx="1800" cy="45" r="3.5" fill="#4D8EF5" opacity="0.5"/>
+  </g>
+
+  <!-- ═══ LAYER 6: "COMMAND TOWER" title — centered ═══ -->
+
+  <!-- Flanking decorative rules — frame the title -->
+  <rect x="570" y="44.5" width="220" height="1" fill="url(#ruleLeft)" rx="0.5"/>
+  <circle cx="572" cy="45" r="2.5" fill="#4D8EF5" opacity="0.45"/>
+  <rect x="1130" y="44.5" width="220" height="1" fill="url(#ruleRight)" rx="0.5"/>
+  <circle cx="1347" cy="45" r="2.5" fill="#4D8EF5" opacity="0.45"/>
+
+  <!-- Outer bloom (atmosphere) -->
+  <text x="960" y="57"
+        font-family="'Fira Sans Condensed','Fira Sans',sans-serif"
+        font-size="36"
+        font-weight="800"
+        letter-spacing="0.15em"
+        text-anchor="middle"
+        fill="#1E6FE8"
+        opacity="0.22"
+        filter="url(#textBloom)">COMMAND TOWER</text>
+  <!-- Mid halo (luminous edge) -->
+  <text x="960" y="57"
+        font-family="'Fira Sans Condensed','Fira Sans',sans-serif"
+        font-size="36"
+        font-weight="800"
+        letter-spacing="0.15em"
+        text-anchor="middle"
+        fill="#4D8EF5"
+        opacity="0.35"
+        filter="url(#barHalo)">COMMAND TOWER</text>
+  <!-- Primary text — gradient fill -->
+  <text x="960" y="57"
+        font-family="'Fira Sans Condensed','Fira Sans',sans-serif"
+        font-size="36"
+        font-weight="800"
+        letter-spacing="0.15em"
+        text-anchor="middle"
+        fill="url(#textGradient)">COMMAND TOWER</text>
+
+  <!-- ═══ LAYER 10: Bottom accent line — centered peak, bright dot at x=960 ═══ -->
+  <rect x="0" y="82" width="1920" height="6" fill="url(#accentGlow)"/>
+  <rect x="0" y="88" width="1920" height="2" fill="url(#accentLine)" rx="1"/>
+  <circle cx="960" cy="89" r="3" fill="#4D8EF5" opacity="0.9"/>
+
+</svg>
