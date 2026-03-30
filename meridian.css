@@ -444,9 +444,12 @@ thead td {
 .usage-disk {
   box-shadow: inset 0 0 0 100px #3D4A5C !important;
 }
-/* Fill: override greenbar gradient to accent blue */
-.usage-disk > span.greenbar {
+/* Fill: all usage bar fills render above box-shadow track, accent blue color.
+   Dynamix uses .greenbar for some bars, no class for others — target span:first-child. */
+.usage-disk > span:first-child {
   background: var(--az-accent) !important;
+  position: absolute !important;
+  z-index: 1 !important;
 }
 
 /* Usage/progress bar fill — accent blue */
