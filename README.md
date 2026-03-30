@@ -91,3 +91,72 @@ To change the accent color across the entire theme, update `--az-accent` in Laye
 | Base theme | Black |
 | Required plugin | [Simple Custom WebUI CSS](https://github.com/WuSiYu/unraid-custom-css) by WuSiYu |
 | S/4HANA | N/A — Unraid only |
+
+---
+
+## Meridian Light
+
+<p align="center">
+  <img src="command-tower-banner-light.png" alt="Meridian Light — Command Tower" width="100%">
+</p>
+
+Companion light theme. Same three-layer architecture, shallow-reef aqua palette — pale tropical aqua canvas with teal accents.
+
+**Design metaphor:** sunlight filtering through the top of the ocean.
+
+### Screenshots
+
+<p align="center">
+  <img src="screenshots/dashboard-light.png" alt="Dashboard" width="100%">
+  <br><em>Dashboard</em>
+</p>
+
+<p align="center">
+  <img src="screenshots/main-light.png" alt="Array / Main" width="100%">
+  <br><em>Array / Main</em>
+</p>
+
+<p align="center">
+  <img src="screenshots/plugins-light.png" alt="Plugins" width="100%">
+  <br><em>Plugins</em>
+</p>
+
+<p align="center">
+  <img src="screenshots/settings-light.png" alt="Settings" width="100%">
+  <br><em>Settings</em>
+</p>
+
+---
+
+### Install
+
+> **Requires** the [Simple Custom WebUI CSS](https://github.com/WuSiYu/unraid-custom-css) plugin (same as Meridian dark).
+
+1. Install **Simple Custom WebUI CSS** from Community Applications (if not already installed — same plugin as Meridian dark)
+2. Download [`meridian-light.css`](meridian-light.css)
+3. In Unraid navigate to **Settings → Display Settings**
+4. Under **Additional CSS for Black theme**, paste the full contents of `meridian-light.css`
+5. Click **Save** — the UI reloads with Meridian Light applied
+
+> **Note:** Meridian Light replaces Meridian (dark) — do not apply both simultaneously.
+
+**Optional:** Download [`command-tower-banner-light.svg`](command-tower-banner-light.svg) and set it under **Settings → Display Settings → Show Banner**.
+
+### Palette
+
+| Token | Value | Role |
+|---|---|---|
+| `--az-bg` | `#E8F6F8` | Page canvas |
+| `--az-surface` | `#CCE9EE` | Cards, panels, headers |
+| `--az-surface-2` | `#B8DCE4` | Modals, focused inputs |
+| `--az-border` | `#6B8C96` | Structural borders |
+| `--az-border-subtle` | `#8AAAB5` | Dividers, hr |
+| `--az-text-primary` | `#0A3540` | Primary text (15:1 AAA) |
+| `--az-text-muted` | `#326A79` | Secondary text (~4.9:1 AA) |
+| `--az-text-disabled` | `#7AAFBB` | Intentional fail state (1.97:1) |
+| `--az-accent` | `#0891B2` | Icons, borders, non-text interactive |
+| `--az-accent-hover` | `#0E7490` | Link text resting; button/icon hover |
+| `--az-accent-active` | `#155E75` | Pressed state |
+| `--az-warning` | `#B45309` | Disk warnings |
+| `--az-error` | `#DC2626` | Critical errors |
+| `--az-track` | `#8FBFCB` | Usage bar track (unfilled portion) |
