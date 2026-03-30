@@ -127,7 +127,7 @@
   --disabled-text-color:  var(--az-text-disabled); /* Disabled control text          */
   --inverse-text-color:   var(--az-bg);            /* Text on accent/inverted surface*/
   --header-text-color:    var(--az-text-primary);  /* Header nav text                */
-  --footer-text:          var(--az-text-muted);    /* Footer text                    */
+  --footer-text:          var(--az-text-primary);  /* Footer text                    */
   --link-text-color:      var(--az-accent);        /* Hyperlink text                 */
 
   /* --- Borders ------------------------------------------------------------ */
