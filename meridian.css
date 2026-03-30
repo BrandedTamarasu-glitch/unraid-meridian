@@ -94,6 +94,9 @@
 
   --az-warning:        #D97706; /* Operational warning — disk temp, low space     */
   --az-error:          #EF4444; /* Critical error — disk fault, parity failure    */
+
+  /* Dynamix gray scale overrides — remap to navy-aligned values */
+  --gray-400:          #3D4A5C !important; /* Usage bar track (was #909090 — too light on dark surface) */
 }
 
 
@@ -157,7 +160,7 @@
   --hover-table-row-background-color: rgba(30, 111, 232, 0.08); /* EXCEPTION: literal rgba — var() chain unreliable in Dynamix */
 
   /* --- Usage / Progress bars ---------------------------------------------- */
-  --usage-bar-background-color:      var(--az-border);  /* Bar track (unfilled)         */
+  --usage-bar-background-color:      #3D4A5C;           /* Bar track (unfilled) — lighter than --az-border for visibility on dark surface */
   --usage-bar-used-background-color: var(--az-accent);  /* Bar fill (used amount)       */
 
   /* --- Checkboxes & Radios ------------------------------------------------ */
@@ -433,6 +436,17 @@ thead td {
   border-bottom: 1px solid var(--az-border-subtle);
   padding-bottom: 6px;
   margin-bottom: 8px;
+}
+
+
+/* Usage/progress bar track — Dynamix overrides background-color after our CSS.
+   Use inset box-shadow instead: paints behind children, unaffected by bg-color rules. */
+.usage-disk {
+  box-shadow: inset 0 0 0 100px #3D4A5C !important;
+}
+/* Fill: override greenbar gradient to accent blue */
+.usage-disk > span.greenbar {
+  background: var(--az-accent) !important;
 }
 
 /* Usage/progress bar fill — accent blue */
