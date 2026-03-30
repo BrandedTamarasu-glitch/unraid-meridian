@@ -130,6 +130,7 @@
   --disabled-text-color:  var(--az-text-disabled); /* Disabled control text          */
   --inverse-text-color:   var(--az-bg);            /* Text on accent/inverted surface*/
   --header-text-color:    var(--az-text-primary);  /* Header nav text                */
+  --header-text-primary:  var(--az-text-primary);  /* My Servers React component icons (bell, key) */
   --footer-text:          var(--az-text-primary);  /* Footer text                    */
   --link-text-color:      var(--az-accent);        /* Hyperlink text                 */
 
